@@ -58,3 +58,4 @@ def jalankan_dijkstra_dari_garis(titik_ids, garis, awal_id, tujuan_id):
     total = L[t][0]
     edge_path = [{"a": path_ids[i], "b": path_ids[i+1]} for i in range(len(path_ids)-1)]
     return {"path": path_ids, "total": total, "edgePath": edge_path}
+

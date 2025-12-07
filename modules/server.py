@@ -5,7 +5,7 @@ from urllib.parse import urlparse, parse_qs
 
 MODULES_DIR = os.path.dirname(__file__)
 ROOT_DIR = os.path.dirname(MODULES_DIR)
-algo = SourceFileLoader("algomod", os.path.join(MODULES_DIR, "algoritma dijsktra.py")).load_module()
+algo = SourceFileLoader("algomod", os.path.join(MODULES_DIR, "algoritma_dijkstra.py")).load_module()
 grafmod = SourceFileLoader("grafmod", os.path.join(MODULES_DIR, "graf.py")).load_module()
 
 DB_PATH = os.path.join(ROOT_DIR, "graf.db")
@@ -159,29 +159,31 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_header("Content-Length", str(len(data))); self.end_headers(); self.wfile.write(data); return
             except Exception:
                 self.send_response(500); self._cors(); self.end_headers(); return
-        if p.path == "/desain.css":
+        # Serve static files from static directory
+        if p.path == "/desain.css" or p.path == "/static/desain.css":
             try:
-                file_path = os.path.join(ROOT_DIR, "desain.css")
+                file_path = os.path.join(ROOT_DIR, "static", "desain.css")
                 with open(file_path, "rb") as f:
                     data = f.read()
                 self.send_response(200); self._cors(); self.send_header("Content-Type", "text/css; charset=utf-8")
                 self.send_header("Content-Length", str(len(data))); self.end_headers(); self.wfile.write(data); return
             except Exception:
                 self.send_response(404); self._cors(); self.end_headers(); return
-        if p.path == "/Script.js":
+        if p.path == "/Script.js" or p.path == "/static/Script.js":
             try:
-                file_path = os.path.join(ROOT_DIR, "Script.js")
+                file_path = os.path.join(ROOT_DIR, "static", "Script.js")
                 with open(file_path, "rb") as f:
                     data = f.read()
                 self.send_response(200); self._cors(); self.send_header("Content-Type", "application/javascript; charset=utf-8")
                 self.send_header("Content-Length", str(len(data))); self.end_headers(); self.wfile.write(data); return
             except Exception:
                 self.send_response(404); self._cors(); self.end_headers(); return
-        if p.path.startswith("/Static/"):
+        if p.path.startswith("/Static/") or p.path.startswith("/static/"):
             from urllib.parse import unquote
-            rel = unquote(p.path[len("/Static/"):])
+            prefix_len = len("/Static/") if p.path.startswith("/Static/") else len("/static/")
+            rel = unquote(p.path[prefix_len:])
             try:
-                file_path = os.path.join(ROOT_DIR, "Static", rel)
+                file_path = os.path.join(ROOT_DIR, "static", rel)
                 ctype = "text/css; charset=utf-8" if rel.endswith(".css") else (
                     "application/javascript; charset=utf-8" if rel.endswith(".js") else "application/octet-stream"
                 )
@@ -195,12 +197,22 @@ class Handler(BaseHTTPRequestHandler):
             from urllib.parse import unquote
             rel = unquote(p.path[len("/gambar/"):])
             try:
-                primary = os.path.join(ROOT_DIR, "Static", "Gambar", rel)
+                primary = os.path.join(ROOT_DIR, "static", "Gambar", rel)
                 fallback = os.path.join(ROOT_DIR, "Gambar", rel)
                 file_path = primary if os.path.exists(primary) else fallback
+                if not os.path.exists(file_path):
+                    self.send_response(404); self._cors(); self.end_headers(); return
                 with open(file_path, "rb") as f:
                     data = f.read()
-                self.send_response(200); self._cors(); self.send_header("Content-Type", "image/png")
+                # Detect image type
+                img_type = "image/png"
+                if rel.lower().endswith(".jpg") or rel.lower().endswith(".jpeg"):
+                    img_type = "image/jpeg"
+                elif rel.lower().endswith(".gif"):
+                    img_type = "image/gif"
+                elif rel.lower().endswith(".webp"):
+                    img_type = "image/webp"
+                self.send_response(200); self._cors(); self.send_header("Content-Type", img_type)
                 self.send_header("Content-Length", str(len(data))); self.end_headers(); self.wfile.write(data); return
             except Exception:
                 self.send_response(404); self._cors(); self.end_headers(); return

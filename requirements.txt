@@ -1,1 +1,4 @@
-
+# Python Web Server Requirements
+# No external dependencies required - uses only Python standard library
+# For production deployment with Gunicorn (optional but recommended)
+gunicorn>=21.2.0
