@@ -173,9 +173,35 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
+  // Simpan koordinat asli untuk transformasi
+  let originalCoords = new Map();
+  
+  function saveOriginalCoords() {
+    originalCoords.clear();
+    for (const n of titik) {
+      originalCoords.set(n.id, { x: n.x, y: n.y });
+    }
+  }
+  
+  function restoreOriginalCoords() {
+    for (const n of titik) {
+      const orig = originalCoords.get(n.id);
+      if (orig) {
+        n.x = orig.x;
+        n.y = orig.y;
+      }
+    }
+  }
+  
   function autoFitKanvas() {
     if (!canvas) return;
     if (!titik.length) { sesuaikanKanvas(); return; }
+    
+    // Restore koordinat asli sebelum transformasi
+    if (originalCoords.size > 0) {
+      restoreOriginalCoords();
+    }
+    
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (const n of titik) { if (n.x < minX) minX = n.x; if (n.y < minY) minY = n.y; if (n.x > maxX) maxX = n.x; if (n.y > maxY) maxY = n.y; }
     const margin = 40;
@@ -186,7 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const baseH = Math.max(520, neededH);
     const dx = margin - minX;
     const dy = margin - minY;
-    for (const n of titik) { n.x += dx; n.y += dy; }
+    // Transformasi koordinat untuk tampilan
+    for (const n of titik) { 
+      n.x += dx; 
+      n.y += dy;
+    }
     canvas.width = baseW;
     canvas.height = baseH;
     draw();
@@ -243,11 +273,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await res.json();
     titik = data.titik || [];
     garis = data.garis || [];
-    // Gunakan posisi yang sudah tersimpan di database, jangan ubah menjadi lingkaran
-    for (let i = 0; i < titik.length; i++) {
-      titik[i].x = parseFloat(titik[i].x) || 0;
-      titik[i].y = parseFloat(titik[i].y) || 0;
+    
+    // Reset koordinat asli
+    originalCoords.clear();
+    
+    // Jangan ubah koordinat jika sudah ada dari koordinat_peta.json
+    // Koordinat sudah diatur oleh server berdasarkan koordinat_peta.json
+    // Hanya ubah jika semua node tidak punya koordinat yang valid
+    const hasValidCoords = titik.every(n => n.x !== undefined && n.y !== undefined && n.x !== null && n.y !== null);
+    if (titik.length && !hasValidCoords) {
+      const rect = canvas.getBoundingClientRect();
+      const cx = Math.max(220, Math.floor(rect.width/2));
+      const cy = 260;
+      const r = Math.max(140, Math.min(cx, cy) - 60) + Math.max(0, Math.floor(titik.length*2));
+      const step = (Math.PI*2) / titik.length;
+      for (let i = 0; i < titik.length; i++) {
+        const ang = i * step;
+        titik[i].x = cx + Math.cos(ang) * r;
+        titik[i].y = cy + Math.sin(ang) * r;
+      }
     }
+    
+    // Simpan koordinat asli setelah memuat
+    saveOriginalCoords();
+    
     const nextNum = Math.max(0, ...titik.map(n => {
       const m = String(n.id).match(/\d+/);
       return m ? parseInt(m[0], 10) : 0;
@@ -263,12 +312,13 @@ document.addEventListener("DOMContentLoaded", () => {
       tabelGarisBody.appendChild(tr);
     }
     updateSelectOptions();
+    autoFitKanvas();
     if (titik.length) {
       const sortedIds = [...titik].sort((a,b)=>idNum(a.id)-idNum(b.id)).map(n=>n.id);
       pilihAwal.value = sortedIds[0];
       pilihTujuan.value = sortedIds[sortedIds.length - 1];
     }
-    autoFitKanvas();
+    draw();
   }
 
 
@@ -353,97 +403,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     
-    const tombolPerumahan = document.getElementById("layoutPerumahan");
-    if (tombolPerumahan) tombolPerumahan.addEventListener("click", () => {  
-  const grid = 60;
-  const snap = v => Math.round(v / grid) * grid;
-
-  // Jalan utama luar (hasil analisis bentuk peta)
-  const outer = [
-    "T1","T2","T3","T4","T5",
-    "T7","T14","T15","T19","T21",
-    "T23","T24","T25"
-  ];
-
-  // Gang vertikal 1
-  const v1 = ["T5","T18","T17","T16","T15"];
-
-  // Gang vertikal 2
-  const v2 = ["T7","T8","T10","T11","T12"];
-
-  // Gang vertikal 3
-  const v3 = ["T4","T20","T19"];
-
-  // Jalur samping
-  const side = ["T22","T2"];
-
-  // --- POSISI KOORDINAT ---
-  const X_OUTER_LEFT = 100;
-  const X_OUTER_RIGHT = 600;
-  const X_V1 = 250;
-  const X_V2 = 350;
-  const X_V3 = 450;
-
-  // 1. Tempatkan loop luar berbentuk persegi
-  let y = 100;
-
-  for (let i=0;i<outer.length;i++){
-    const id = outer[i];
-    let node = titik.find(t=>t.id===id);
-
-    // kiri sampai T5
-    if (i <= 4) {
-      node.x = X_OUTER_LEFT;
-      node.y = y;
-      y += 60;
-    }
-    // T7 → T14 → T15 → T19 → T21 (ke bawah)
-    else if (i <= 9){
-      node.x = X_OUTER_RIGHT;
-      node.y = 100 + (i-5)*60;
-    }
-    // T23 → T24 → T25 naik ke kiri
-    else {
-      node.x = X_OUTER_RIGHT - (i-9)*140;
-      node.y = 100 + (9*60);
-    }
-  }
-
-  // 2. Gang vertikal 1
-  let y1 = 180;
-  for (const id of v1){
-    const node = titik.find(t=>t.id===id);
-    node.x = X_V1;
-    node.y = snap(y1);
-    y1 += 60;
-  }
-
-  // 3. Gang vertikal 2
-  let y2 = 150;
-  for (const id of v2){
-    const node = titik.find(t=>t.id===id);
-    node.x = X_V2;
-    node.y = snap(y2);
-    y2 += 60;
-  }
-
-  // 4. Gang vertikal 3
-  let y3 = 150;
-  for (const id of v3){
-    const node = titik.find(t=>t.id===id);
-    node.x = X_V3;
-    node.y = snap(y3);
-    y3 += 60;
-  }
-
-  // 5. Jalur samping T22–T2
-  const node22 = titik.find(t=>t.id==="T22");
-  const node2 = titik.find(t=>t.id==="T2");
-  node22.x = X_V1 - 80;
-  node22.y = snap(200);
-
-      autoFitKanvas();
-    });
     muatDaftarGraf();
   }
   // Inisialisasi tampilan awal UI

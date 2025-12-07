@@ -1,3 +1,23 @@
+def _load_koordinat_peta(koordinat_path):
+    """Memuat koordinat dari koordinat_peta.json"""
+    import json
+    try:
+        with open(koordinat_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        canvas_coords = data.get("canvas", {})
+        coord_map = {}
+        # Map T1-T25 ke "Titik 1"-"Titik 25"
+        for i in range(1, 26):
+            titik_key = f"Titik {i}"
+            t_key = f"T{i}"
+            if titik_key in canvas_coords:
+                titik_data = canvas_coords[titik_key]
+                if isinstance(titik_data, dict) and "x" in titik_data and "y" in titik_data:
+                    coord_map[t_key] = (float(titik_data["x"]), float(titik_data["y"]))
+        return coord_map
+    except Exception:
+        return {}
+
 def build_graph_from_json(json_path):
     import json, os
     try:
@@ -17,23 +37,30 @@ def build_graph_from_json(json_path):
 
     names = sorted(list(name_set))
 
-    pos = {
-        "T1": (0, 10), "T2": (1, 9), "T3": (2, 8), "T4": (3, 7),
-        "T5": (3, 6), "T6": (4, 9), "T7": (4, 5), "T8": (5, 5),
-        "T9": (6, 5), "T10": (5, 4), "T11": (5, 3), "T12": (5, 2),
-        "T13": (4, 2), "T14": (7, 5), "T15": (6, 3), "T16": (5, 1),
-        "T17": (4, 0), "T18": (3, 1), "T19": (7, 3), "T20": (6, 6),
-        "T21": (8, 2), "T22": (2, 9), "T23": (9, 1), "T24": (8, 0),
-        "T25": (1, -1),
-    }
-    scale, base_x, base_y = 60, 100, 100
+    # Memuat koordinat dari koordinat_peta.json
+    koordinat_path = os.path.join(os.path.dirname(os.path.dirname(json_path)), "data", "koordinat_peta.json")
+    coord_map = _load_koordinat_peta(koordinat_path)
+    
     titik = []
     for i, name in enumerate(names):
-        if name in pos:
-            px, py = pos[name]
-            x = base_x + px * scale
-            y = base_y + py * scale
+        # Coba mapping: "Titik 1" -> "T1", "Titik 2" -> "T2", dll
+        # atau langsung gunakan name jika sudah "T1", "T2", dll
+        coord_key = None
+        if name.startswith("Titik "):
+            # Extract number from "Titik X"
+            try:
+                num = int(name.split()[1])
+                coord_key = f"T{num}"
+            except:
+                coord_key = name
         else:
+            coord_key = name
+        
+        if coord_key in coord_map:
+            # Gunakan koordinat dari koordinat_peta.json
+            x, y = coord_map[coord_key]
+        else:
+            # Fallback ke grid layout jika koordinat tidak ditemukan
             cols, dx, dy = 8, 60, 60
             x = 100 + (i % cols) * dx
             y = 100 + (i // cols) * dy
@@ -51,7 +78,7 @@ def build_graph_from_json(json_path):
             seen.add(key)
             garis.append({"a": str(a), "b": b, "w": w})
 
-    return {"nama": "Graf 1", "titik": titik, "garis": garis}
+    return {"nama": "Graf Default", "titik": titik, "garis": garis}
 
 def _draw_networkx(graph_data, pos):
     import networkx as nx

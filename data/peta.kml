@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Peta Algoritma Dijsktra</name>
+    <description/>
+    <Style id="icon-1899-006064-labelson-nodesc">
+      <IconStyle>
+        <color>ff646000</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-01579B-labelson-nodesc">
+      <IconStyle>
+        <color>ff9b5701</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-labelson-nodesc">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-097138-labelson-nodesc">
+      <IconStyle>
+        <color>ff387109</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-0F9D58-labelson-nodesc">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-3949AB-labelson-nodesc">
+      <IconStyle>
+        <color>ffab4939</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-4E342E-labelson-nodesc">
+      <IconStyle>
+        <color>ff2e344e</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-673AB7-labelson-nodesc">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-795548-labelson-nodesc">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-7CB342-labelson-nodesc">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-880E4F-labelson-nodesc">
+      <IconStyle>
+        <color>ff4f0e88</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-9C27B0-labelson-nodesc">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-A52714-labelson-nodesc">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-AFB42B-labelson-nodesc">
+      <IconStyle>
+        <color>ff2bb4af</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-C2185B-labelson-nodesc">
+      <IconStyle>
+        <color>ff5b18c2</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-F57C00-labelson-nodesc">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-FBC02D-labelson-nodesc">
+      <IconStyle>
+        <color>ff2dc0fb</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-FF5252-labelson-nodesc">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-FFD600-labelson-nodesc">
+      <IconStyle>
+        <color>ff00d6ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0288D1-1200-normal">
+      <LineStyle>
+        <color>ffd18802</color>
+        <width>1.2</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-0288D1-1200-highlight">
+      <LineStyle>
+        <color>ffd18802</color>
+        <width>1.8</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-0288D1-1200">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0288D1-1200-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0288D1-1200-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>Titik</name>
+      <Placemark>
+        <name>Titik 3</name>
+        <styleUrl>#icon-1899-880E4F-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5290366,-1.604394,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 18</name>
+        <styleUrl>#icon-1899-3949AB-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5293904,-1.6046929,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 10</name>
+        <styleUrl>#icon-1899-4E342E-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5299141,-1.6047779,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 9</name>
+        <styleUrl>#icon-1899-673AB7-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5300777,-1.6046915,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 15</name>
+        <styleUrl>#icon-1899-FBC02D-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5291859,-1.605459,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 21</name>
+        <styleUrl>#icon-1899-0F9D58-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5286722,-1.6053222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 22</name>
+        <styleUrl>#icon-1899-AFB42B-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5287004,-1.6052136,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 20</name>
+        <styleUrl>#icon-1899-9C27B0-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5289847,-1.6051935,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 13</name>
+        <styleUrl>#icon-1899-FFD600-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5298779,-1.6056627,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 24</name>
+        <styleUrl>#icon-1899-9C27B0-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5285247,-1.6048168,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 25</name>
+        <styleUrl>#icon-1899-0288D1-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.528568,-1.6046747,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 17</name>
+        <styleUrl>#icon-1899-FF5252-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5293413,-1.6048645,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 16</name>
+        <styleUrl>#icon-1899-01579B-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5293138,-1.6050033,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 11</name>
+        <styleUrl>#icon-1899-795548-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5298308,-1.6051407,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 19</name>
+        <styleUrl>#icon-1899-097138-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5289307,-1.6053919,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 23</name>
+        <styleUrl>#icon-1899-006064-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5284215,-1.605219,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 1</name>
+        <styleUrl>#icon-1899-7CB342-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5286746,-1.6043165,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 2</name>
+        <styleUrl>#icon-1899-F57C00-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5289179,-1.6043587,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 14</name>
+        <styleUrl>#icon-1899-C2185B-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5294586,-1.6055435,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 12</name>
+        <styleUrl>#icon-1899-A52714-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5297114,-1.6056199,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Lapisan tanpa judul</name>
+      <Placemark>
+        <name>Garis 21</name>
+        <description>22 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.529448,-1.6045046,0
+            103.5294289,-1.6045633,0
+            103.5294277,-1.6045715,0
+            103.5293937,-1.6046863,0
+            103.5293944,-1.6046936,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 30</name>
+        <description>18 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5293547,-1.604827,0
+            103.5293091,-1.6049866,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 57</name>
+        <description>28 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.529448,-1.6045046,0
+            103.529504,-1.6042619,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 29</name>
+        <description>15 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5293944,-1.6046936,0
+            103.5293779,-1.6047529,0
+            103.5293547,-1.604827,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 40</name>
+        <description>18 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5285247,-1.6048168,0
+            103.5285724,-1.6046624,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 32</name>
+        <description>29 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5291859,-1.605459,0
+            103.5289324,-1.6053919,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 35</name>
+        <description>30 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5289324,-1.6053919,0
+            103.5286722,-1.6053222,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 34</name>
+        <description>23 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5289324,-1.6053919,0
+            103.5289847,-1.6051935,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 50</name>
+        <description>55 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5298308,-1.6051407,0
+            103.5297114,-1.6056199,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 37</name>
+        <description>31 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5286722,-1.6053222,0
+            103.5284161,-1.605223,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 36</name>
+        <description>12 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5286722,-1.6053222,0
+            103.5287004,-1.6052136,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 47</name>
+        <description>29 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5294586,-1.6055435,0
+            103.5297114,-1.6056199,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 39</name>
+        <description>49 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5284161,-1.605223,0
+            103.5285295,-1.6048018,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 43</name>
+        <description>43 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5285724,-1.6046624,0
+            103.5286282,-1.6044673,0
+            103.5286232,-1.6044844,0
+            103.5286773,-1.6043058,0
+            103.5286746,-1.6043165,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 48</name>
+        <description>19 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5297114,-1.6056199,0
+            103.5298779,-1.6056627,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 56</name>
+        <description>30 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5297053,-1.604589,0
+            103.529448,-1.6045046,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 53</name>
+        <description>10 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5299476,-1.6046533,0
+            103.530048,-1.6046808,0
+            103.530076,-1.6046882,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 52</name>
+        <description>13 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5299181,-1.6047667,0
+            103.5299476,-1.6046533,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 58</name>
+        <description>110 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5297053,-1.604589,0
+            103.5294586,-1.6055435,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 54</name>
+        <description>28 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5299476,-1.6046533,0
+            103.5297053,-1.604589,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 1</name>
+        <description>27 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5286773,-1.6043058,0
+            103.5289179,-1.6043587,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 19</name>
+        <description>29 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5292009,-1.6044284,0
+            103.529448,-1.6045046,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 45</name>
+        <description>89 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5292009,-1.6044284,0
+            103.5289847,-1.6051935,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 46</name>
+        <description>32 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5291859,-1.605459,0
+            103.5294586,-1.6055435,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 4</name>
+        <description>14 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5289179,-1.6043587,0
+            103.5289679,-1.6043733,0
+            103.5290366,-1.604394,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 51</name>
+        <description>43 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5298308,-1.6051407,0
+            103.5299181,-1.6047667,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 6</name>
+        <description>19 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5290366,-1.604394,0
+            103.529109,-1.6044092,0
+            103.5292009,-1.6044284,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 8</name>
+        <description>98 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5289179,-1.6043587,0
+            103.5287004,-1.6052136,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Garis 31</name>
+        <description>53 m</description>
+        <styleUrl>#line-0288D1-1200</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            103.5293118,-1.6049986,0
+            103.5291859,-1.605459,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Lapisan tanpa judul</name>
+      <Placemark>
+        <name>Titik 4</name>
+        <styleUrl>#icon-1899-097138-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5292014,-1.6044308,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 5</name>
+        <styleUrl>#icon-1899-006064-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.529448,-1.6045046,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 7</name>
+        <styleUrl>#icon-1899-9C27B0-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5297053,-1.604589,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 6</name>
+        <styleUrl>#icon-1899-FF5252-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5295018,-1.6042746,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Titik 8</name>
+        <styleUrl>#icon-1899-880E4F-labelson-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            103.5299476,-1.6046533,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Lapisan tanpa judul</name>
+    </Folder>
+  </Document>
+</kml>
