@@ -190,25 +190,24 @@ class Handler(BaseHTTPRequestHandler):
     
     def do_HEAD(self):
         """Handle HEAD requests - same as GET but without body"""
-        p = urlparse(self.path)
+        # HEAD request sama dengan GET tapi tanpa body
+        # Kita bisa reuse logic dari do_GET dengan cara override wfile
+        original_wfile = self.wfile
         
-        # Check if file exists
-        if p.path in ("/", "/index.html", "/Home.html"):
-            file_path = os.path.join(ROOT_DIR, "template", "Home.html")
-            if os.path.exists(file_path):
-                with open(file_path, "rb") as f:
-                    data = f.read()
-                self.send_response(200)
-                self._cors()
-                self.send_header("Content-Type", "text/html; charset=utf-8")
-                self.send_header("Content-Length", str(len(data)))
-                self.end_headers()
-                return
+        class NoWriteFile:
+            def write(self, data):
+                pass
+            def flush(self):
+                pass
         
-        # For other paths, just return 200 OK
-        self.send_response(200)
-        self._cors()
-        self.end_headers()
+        self.wfile = NoWriteFile()
+        
+        try:
+            # Panggil do_GET tapi tidak akan menulis body
+            self.do_GET()
+        finally:
+            # Restore wfile
+            self.wfile = original_wfile
     
     def do_GET(self):
         p = urlparse(self.path)
