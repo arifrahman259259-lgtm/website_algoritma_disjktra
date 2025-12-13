@@ -181,9 +181,31 @@ class Handler(BaseHTTPRequestHandler):
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, HEAD")
     
     def do_OPTIONS(self):
+        self.send_response(200)
+        self._cors()
+        self.end_headers()
+    
+    def do_HEAD(self):
+        """Handle HEAD requests - same as GET but without body"""
+        p = urlparse(self.path)
+        
+        # Check if file exists
+        if p.path in ("/", "/index.html", "/Home.html"):
+            file_path = os.path.join(ROOT_DIR, "template", "Home.html")
+            if os.path.exists(file_path):
+                with open(file_path, "rb") as f:
+                    data = f.read()
+                self.send_response(200)
+                self._cors()
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                return
+        
+        # For other paths, just return 200 OK
         self.send_response(200)
         self._cors()
         self.end_headers()
@@ -459,7 +481,7 @@ if __name__ == "__main__":
         server = HTTPServer((host, port), Handler)
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n✅ Server dihentikan.")
+        print("\n Server dihentikan.")
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
         sys.exit(1)
