@@ -485,6 +485,8 @@ class WSGIAdapter:
                 self.request = request
                 self.client_address = client_address
                 self.server = server
+                # Initialize attributes yang diperlukan oleh Handler
+                self.path = request.path
                 self.headers = {}
                 self.response_code = 200
                 self.response_message = 'OK'
