@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Application entry point - Universal untuk semua use case
-- Bisa digunakan dengan Gunicorn (WSGI): gunicorn -c config/gunicorn_config.py app:application
-- Bisa dijalankan langsung: python app.py
+Application entry point - Python HTTP Server
+Jalankan dengan: python app.py
 """
 import os
 import sys
@@ -537,22 +536,23 @@ class WSGIAdapter:
         return [response_body]
 
 
-# Create WSGI application untuk Gunicorn
-application = WSGIAdapter(Handler)
-
 # Initialize database and preload data
 db_init()
 preload_from_file()
 
-# Untuk direct execution (development/production)
+# Main execution
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "5000"))
+    port = int(os.environ.get("PORT", "8000"))
     host = os.environ.get("HOST", "0.0.0.0")
     
-    print(f"Server berjalan di http://{host}:{port}")
-    print("Tekan Ctrl+C untuk menghentikan server")
+    print(f"🚀 Server berjalan di http://{host}:{port}")
+    print("📝 Tekan Ctrl+C untuk menghentikan server")
     
     try:
-        HTTPServer((host, port), Handler).serve_forever()
+        server = HTTPServer((host, port), Handler)
+        server.serve_forever()
     except KeyboardInterrupt:
-        print("\nServer dihentikan.")
+        print("\n✅ Server dihentikan.")
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        sys.exit(1)
