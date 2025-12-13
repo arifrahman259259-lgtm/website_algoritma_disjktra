@@ -9,7 +9,10 @@ bind = f"0.0.0.0:{os.environ.get('PORT', '8000')}"
 backlog = 2048
 
 # Worker processes
-workers = multiprocessing.cpu_count() * 2 + 1
+# Untuk VPS kecil, gunakan 2-4 workers
+# Untuk VPS besar, gunakan cpu_count * 2 + 1
+cpu_count = multiprocessing.cpu_count()
+workers = min(cpu_count * 2 + 1, 4)  # Max 4 workers untuk VPS kecil
 worker_class = "sync"
 worker_connections = 1000
 timeout = 30
