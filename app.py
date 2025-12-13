@@ -190,24 +190,67 @@ class Handler(BaseHTTPRequestHandler):
     
     def do_HEAD(self):
         """Handle HEAD requests - same as GET but without body"""
-        # HEAD request sama dengan GET tapi tanpa body
-        # Kita bisa reuse logic dari do_GET dengan cara override wfile
-        original_wfile = self.wfile
+        p = urlparse(self.path)
         
-        class NoWriteFile:
-            def write(self, data):
+        # Handle semua path seperti GET tapi tanpa body
+        if p.path in ("/", "/index.html", "/Home.html"):
+            try:
+                file_path = os.path.join(ROOT_DIR, "template", "Home.html")
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as f:
+                        data = f.read()
+                    self.send_response(200)
+                    self._cors()
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                    self.send_header("Content-Length", str(len(data)))
+                    self.end_headers()
+                    return
+            except Exception:
                 pass
-            def flush(self):
+        
+        # Static files
+        if p.path in ("/desain.css", "/static/desain.css"):
+            try:
+                file_path = os.path.join(ROOT_DIR, "static", "desain.css")
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as f:
+                        data = f.read()
+                    self.send_response(200)
+                    self._cors()
+                    self.send_header("Content-Type", "text/css; charset=utf-8")
+                    self.send_header("Content-Length", str(len(data)))
+                    self.end_headers()
+                    return
+            except Exception:
                 pass
         
-        self.wfile = NoWriteFile()
+        if p.path in ("/Script.js", "/static/Script.js"):
+            try:
+                file_path = os.path.join(ROOT_DIR, "static", "Script.js")
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as f:
+                        data = f.read()
+                    self.send_response(200)
+                    self._cors()
+                    self.send_header("Content-Type", "application/javascript; charset=utf-8")
+                    self.send_header("Content-Length", str(len(data)))
+                    self.end_headers()
+                    return
+            except Exception:
+                pass
         
-        try:
-            # Panggil do_GET tapi tidak akan menulis body
-            self.do_GET()
-        finally:
-            # Restore wfile
-            self.wfile = original_wfile
+        # API endpoints - return 200 OK dengan headers
+        if p.path.startswith("/api/") or p.path.startswith("/graf/"):
+            self.send_response(200)
+            self._cors()
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            return
+        
+        # Default: return 200 OK
+        self.send_response(200)
+        self._cors()
+        self.end_headers()
     
     def do_GET(self):
         p = urlparse(self.path)
