@@ -5,7 +5,8 @@ import multiprocessing
 import os
 
 # Server socket
-bind = f"0.0.0.0:{os.environ.get('PORT', '8000')}"
+# Production: jangan expose port Gunicorn ke publik. Nginx akan proxy ke Gunicorn.
+bind = os.environ.get("BIND", f"127.0.0.1:{os.environ.get('PORT', '8000')}")
 backlog = 2048
 
 # Worker processes
@@ -20,7 +21,7 @@ keepalive = 2
 accesslog = "-"  # Log to stdout
 errorlog = "-"   # Log to stderr
 loglevel = "info"
-access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 # Process naming
 proc_name = "dijkstra_app"

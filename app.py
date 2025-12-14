@@ -7,7 +7,7 @@ Jalankan dengan: python app.py
 import os
 import json
 import sqlite3
-from flask import Flask, render_template, send_from_directory, jsonify, request
+from flask import Flask, render_template, send_from_directory, jsonify, request, redirect
 from flask_cors import CORS
 
 # Set working directory to project root
@@ -111,38 +111,15 @@ def db_find_graph_by_name(nama):
 
 def preload_from_file():
     """Preload graph data from JSON file"""
+    file_path = os.path.join(ROOT_DIR, "data", "list graf.json")
     try:
-        file_path = os.path.join(ROOT_DIR, "data", "list graf.json")
-        try:
-            data = build_graph_from_json(file_path)
-        except Exception:
-            data = None
-        if data:
-            try:
-                conn = sqlite3.connect(DB_PATH)
-                c = conn.cursor()
-                c.execute("UPDATE graphs SET nama=? WHERE nama LIKE ?", (data.get("nama"), "Graf JSON Awal%"))
-                conn.commit()
-                conn.close()
-            except Exception:
-                pass
-            existing = db_find_graph_by_name(data.get("nama"))
-            if not existing:
-                db_insert_graph(data.get("nama"), data.get("titik", []), data.get("garis", []))
+        data = build_graph_from_json(file_path) or {}
     except Exception:
-        pass
-    
-    if db_count_graphs() == 0:
-        contoh_titik = [
-            {"id": "1", "name": "A", "x": 120, "y": 120},
-            {"id": "2", "name": "B", "x": 180, "y": 160},
-            {"id": "3", "name": "C", "x": 240, "y": 180}
-        ]
-        contoh_garis = [
-            {"a": "1", "b": "2", "w": 40},
-            {"a": "2", "b": "3", "w": 60}
-        ]
-        db_insert_graph("Contoh Graf", contoh_titik, contoh_garis)
+        data = {}
+
+    # Hanya insert saat DB masih kosong dan data JSON valid
+    if db_count_graphs() == 0 and data.get("nama") and isinstance(data.get("titik"), list) and isinstance(data.get("garis"), list):
+        db_insert_graph(data.get("nama"), data.get("titik", []), data.get("garis", []))
 
 def jalankan_dijkstra(titik_ids, garis, awal_id, tujuan_id):
     """Run Dijkstra algorithm and return path, total distance, and iterations"""
@@ -170,10 +147,20 @@ def index():
     """Serve main page"""
     return render_template('Home.html')
 
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    """Serve static files"""
-    return send_from_directory(app.static_folder, filename)
+@app.route('/Static/<path:filename>')
+def static_files_legacy(filename):
+    """Compat: serve static files for legacy '/Static/...' paths (case sensitive on Linux)."""
+    return redirect(f"/static/{filename}", code=301)
+
+@app.route('/desain.css')
+def desain_css_root():
+    """Compat: serve CSS from root path."""
+    return redirect("/static/desain.css", code=301)
+
+@app.route('/Script.js')
+def script_js_root():
+    """Compat: serve JS from root path."""
+    return redirect("/static/Script.js", code=301)
 
 @app.route('/gambar/<path:filename>')
 def gambar(filename):
@@ -269,7 +256,7 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", "8000"))
     host = os.environ.get("HOST", "0.0.0.0")
     
-    print(f"🚀 Server berjalan di http://{host}:{port}")
-    print("📝 Tekan Ctrl+C untuk menghentikan server")
+    print(f"Server berjalan di http://{host}:{port}")
+    print("Tekan Ctrl+C untuk menghentikan server")
     
     app.run(host=host, port=port, debug=False)
